@@ -9,4 +9,4 @@ fi
 # Keras to TensorflowJS
 ./keras_to_tfjs.sh $1 $2
 # Keras to Tensorflow
-
+./keras_to_tf.sh $1 $2

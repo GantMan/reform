@@ -15,6 +15,6 @@ mkdir $RESULT_DIR
 tensorflowjs_converter --input_format keras $1 ./$RESULT_DIR/tfjs_$NAME
 zip ./$RESULT_DIR/tfjs_$NAME.zip ./$RESULT_DIR/tfjs_$NAME/
 # Quantized
-tensorflowjs_converter --quantization_bytes 1 --input_format keras $1 ./$RESULT_DIR/tfjs_min_$NAME
-zip ./$RESULT_DIR/tfjs_min_$NAME_min.zip ./$RESULT_DIR/tfjs_min_$NAME/
+tensorflowjs_converter --quantization_bytes 1 --input_format keras $1 ./$RESULT_DIR/tfjs_quant_$NAME
+zip ./$RESULT_DIR/tfjs_min_$NAME_min.zip ./$RESULT_DIR/tfjs_quant_$NAME/
 
