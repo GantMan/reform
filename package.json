@@ -9,7 +9,5 @@
     "express": "^4.17.1",
     "stripe": "^7.9.1"
   },
-  "devDependencies": {
-    "pm2": "^3.5.1"
-  }
+  "devDependencies": {}
 }
