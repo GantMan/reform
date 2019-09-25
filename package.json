@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "pm2 start --name proselyte"
+    "start": "pm2 start server.js --name proselyte"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
