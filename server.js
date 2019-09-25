@@ -9,6 +9,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors({ origin: 'http://localhost:3000' }))
 const configureRoutes = require('./routes')
+// Do Port (8000 for dev - 3000 for prod)
+const usePort = process.env.DEV_PORT || 3000
 // Payment stuffs
 configureRoutes(app)
 
@@ -32,7 +34,7 @@ app.post('/upload', function(req, res) {
   fs.writeFile('./test.png', Buffer.from(req.body.file.data), console.error)
 })
 
-app.listen(3000, error => {
+app.listen(usePort, error => {
   if (error) throw error
-  console.log('Server running on port ' + 3000)
+  console.log('API running on port ' + usePort)
 })
