@@ -1,1 +1,3 @@
 results/
+.env
+node_modules/
