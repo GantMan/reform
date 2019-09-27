@@ -49,7 +49,7 @@ tflite = open(tflite_dir + tflite_file,"wb").write(tfmodel)
 tf_js = converters.dispatch_keras_h5_to_tfjs_layers_model_conversion(keras_model, tfjs_dir)
 
 # Zip all the Files
-zipObj = ZipFile(zip_dir + r'model.zip', 'w')
+zipObj = ZipFile(zip_dir + r'file.zip', 'w')
  
 # Add multiple files to the zip
 zipObj.write(tflite_dir + r'\file.tflite')
