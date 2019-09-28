@@ -7,9 +7,12 @@ const path = require('path')
 const os = require('os')
 dotenv.config()
 const app = express()
-app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors({ origin: 'http://localhost:3000' }))
+//Set Request Size Limit
+app.use(bodyParser.json({ limit: '200mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }))
+
 const configureRoutes = require('./routes')
 // for running commands
 const exec = require('child_process').exec
