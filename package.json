@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "pm2 start server.js --name proselyte"
+    "start": "pm2 start server.js --name reform",
+    "stop": "pm2 stop reform"
   },
   "dependencies": {
     "aws-sdk": "^2.539.0",
