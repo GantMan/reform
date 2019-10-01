@@ -9,9 +9,18 @@ dotenv.config()
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors({ origin: 'http://localhost:3000' }))
-//Set Request Size Limit
+// Set Request Size Limit
 app.use(bodyParser.json({ limit: '200mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }))
+// Talk to amazon
+const AWS = require('aws-sdk')
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_ACCESS_SECRET
+})
+
+const s3 = new AWS.S3()
+const Bucket = 'model-converter532f66f4e234418c985ae1d5bc842f55-dev'
 
 const configureRoutes = require('./routes')
 // for running commands
@@ -21,7 +30,58 @@ const usePort = process.env.DEV_PORT || 3000
 // Payment stuffs
 configureRoutes(app)
 
-// Upload stuffs
+// API process stuffs
+app.post('/reform', (req, res) => {
+  const { Key, folder, fileName } = req.body
+  const file = await s3.getObject({ Bucket, Key }).promise()
+
+  const localPath = path.join(os.tmpdir(), folder)
+  fs.mkdir(localPath, { recursive: true }, console.error)
+  fs.mkdir(path.join(localPath, 'results'), { recursive: true }, console.error)
+  const localFile = path.join(localPath, fileName)
+  fs.writeFile(localFile, Buffer.from(file.Body.data), console.error)
+  console.log('File placed', localFile)
+
+
+  // Perform action on file
+  exec(
+    `converters/zip_file.sh ${localPath} ${fileName}`,
+    {
+      encoding: 'utf-8'
+    },
+    error => {
+      if (error) {
+        console.log(error)
+        res.send({ success: false })
+      }
+
+      console.log('Zip created')
+
+      const filePath = path.join(localPath, 'results', 'result.zip')
+      const params = {
+        Bucket,
+        Body: filePath,
+        Key: 'public/results/' + Date.now() + '_' + path.basename(filePath)
+      }
+
+      s3.upload(params, function(err, data) {
+        //handle error
+        if (err) {
+          console.log('Error', err)
+        }
+
+        //success
+        if (data) {
+          console.log('Uploaded in:', data.Location)
+        }
+      })
+
+    }
+  )
+
+})
+
+// Upload stuffs - NOT BEING USED!
 /*
   body: {
     file: { type: 'Buffer', data: [Array] },
