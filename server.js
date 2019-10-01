@@ -31,7 +31,7 @@ const usePort = process.env.DEV_PORT || 3000
 configureRoutes(app)
 
 // API process stuffs
-app.post('/reform', (req, res) => {
+app.post('/reform', async (req, res) => {
   const { Key, folder, fileName } = req.body
   const file = await s3.getObject({ Bucket, Key }).promise()
 
@@ -41,7 +41,6 @@ app.post('/reform', (req, res) => {
   const localFile = path.join(localPath, fileName)
   fs.writeFile(localFile, Buffer.from(file.Body.data), console.error)
   console.log('File placed', localFile)
-
 
   // Perform action on file
   exec(
@@ -75,10 +74,8 @@ app.post('/reform', (req, res) => {
           console.log('Uploaded in:', data.Location)
         }
       })
-
     }
   )
-
 })
 
 // Upload stuffs - NOT BEING USED!
