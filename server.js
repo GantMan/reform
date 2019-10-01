@@ -66,11 +66,13 @@ app.post('/reform', async (req, res) => {
       s3.upload(params, function(err, data) {
         //handle error
         if (err) {
+          res.send(err)
           console.log('Error', err)
         }
 
         //success
         if (data) {
+          res.send('Success')
           console.log('Uploaded in:', data.Location)
         }
       })
