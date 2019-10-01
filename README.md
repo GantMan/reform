@@ -1,5 +1,3 @@
-Convert the Keras model to plenty of other models
+# API for Proselyte Model Converter
 
-```bash
-$ ./everything.sh ./keras_my_model.h5 my_model
-```
+http://reform.infinite.red
