@@ -56,7 +56,7 @@ app.post('/reform', async (req, res) => {
 
       console.log('Zip created')
 
-      const filePath = path.join(localPath, 'results', 'result.zip')
+      const filePath = path.join(localPath, 'results', 'results.zip')
       const params = {
         Bucket,
         Body: filePath,
