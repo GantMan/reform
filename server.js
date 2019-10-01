@@ -39,7 +39,7 @@ app.post('/reform', async (req, res) => {
   fs.mkdir(localPath, { recursive: true }, console.error)
   fs.mkdir(path.join(localPath, 'results'), { recursive: true }, console.error)
   const localFile = path.join(localPath, fileName)
-  fs.writeFile(localFile, Buffer.from(file.Body.data), console.error)
+  fs.writeFile(localFile, Buffer.from(file.Body), console.error)
   console.log('File placed', localFile)
 
   // Perform action on file
@@ -60,7 +60,7 @@ app.post('/reform', async (req, res) => {
       const params = {
         Bucket,
         Body: filePath,
-        Key: 'public/results/' + Date.now() + '_' + path.basename(filePath)
+        Key: `public/results/${folder}/results.zip`
       }
 
       s3.upload(params, function(err, data) {
