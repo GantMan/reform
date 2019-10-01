@@ -56,11 +56,11 @@ app.post('/reform', async (req, res) => {
 
       console.log('Zip created')
 
-      const filePath = path.join(localPath, 'results', 'results.zip')
+      const filePath = path.join(localPath, 'results', 'result.zip')
       const params = {
         Bucket,
         Body: filePath,
-        Key: `public/results/${folder}/results.zip`
+        Key: `public/results/${folder}/result.zip`
       }
 
       s3.upload(params, function(err, data) {
