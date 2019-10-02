@@ -75,6 +75,19 @@ app.post('/reform', async (req, res) => {
           res.send('Success')
           console.log('Uploaded in:', data.Location)
         }
+
+        console.log('Cleaning up local and S3 file')
+        fs.unlink(localPath, err => {
+          if (err) console.log(err)
+          console.log(localPath + ' was deleted')
+        })
+        fs.unlink(filePath, err => {
+          if (err) console.log(err)
+          console.log(filePath + ' was deleted')
+        })
+        s3.deleteObject({ Bucket, Key }, function(err, _data) {
+          if (err) console.log(err, err.stack)
+        })
       })
     }
   )
