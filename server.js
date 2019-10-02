@@ -77,7 +77,7 @@ app.post('/reform', async (req, res) => {
         }
 
         console.log('Cleaning up local and S3 file')
-        fs.unlink(localPath, err => {
+        fs.unlink(localFile, err => {
           if (err) console.log(err)
           console.log(localPath + ' was deleted')
         })
