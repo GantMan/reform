@@ -44,7 +44,7 @@ app.post('/reform', async (req, res) => {
 
   // Perform action on file
   exec(
-    `../proselyte/converters/zip_file.sh ${localPath} ${fileName}`,
+    `../proselyte/converters/everything.sh ${localPath} ${fileName}`,
     {
       encoding: 'utf-8'
     },
