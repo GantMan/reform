@@ -56,10 +56,10 @@ app.post('/reform', async (req, res) => {
 
       console.log('Zip created')
 
-      const filePath = path.join(localPath, 'results', 'result.zip')
+      const resultFilePath = path.join(localPath, 'results', 'result.zip')
       const params = {
         Bucket,
-        Body: filePath,
+        Body: fs.createReadStream(resultFilePath),
         Key: `public/results/${folder}/result.zip`
       }
 
@@ -81,9 +81,9 @@ app.post('/reform', async (req, res) => {
           if (err) console.log(err)
           console.log(localPath + ' was deleted')
         })
-        fs.unlink(filePath, err => {
+        fs.unlink(resultFilePath, err => {
           if (err) console.log(err)
-          console.log(filePath + ' was deleted')
+          console.log(resultFilePath + ' was deleted')
         })
         s3.deleteObject({ Bucket, Key }, function(err, _data) {
           if (err) console.log(err, err.stack)
